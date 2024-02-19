@@ -18,16 +18,15 @@ if ping(IP) == 1:
         time.sleep(10)
         subprocess.run(["ping", IP])
         if ping(IP) == 0:
-            print("Il ping ha dato esito positivo! VUoi essere reindirizzato alla pagina di controllo?");
-            risposta = input();
+            print("Il ping ha dato esito positivo! Vuoi essere reindirizzato alla pagina di controllo?")
+            risposta = input()
             if risposta == "Y":
-               while(m = 5)
-                str = print("Reindirizzamento in corso");
-                str += str + print(".");
-                m++;
+                m = 5
+                while m < 5:
+                    print("Reindirizzamento in corso" + "." * m)
+                    m += 1
 
-
-        sys.exit();   
+        sys.exit()
     elif risposta.upper() == "N":
         print("WOl si chiuderà tra pochi istanti")
     
