@@ -1,30 +1,42 @@
 import subprocess
 import sys
 import time
+import os
+
 
 IP = "192.168.1.62"
-m = 5
-print("█░█░█▀▀░█░░░█▀▀░█▀█░█▄█░█▀▀░░░▀█▀░█▀█░░░█░█░█▀█░█")
-print("█▄█░█▀▀░█░░░█░░░█░█░█░█░█▀▀░░░░█░░█░█░░░█▄█░█░█░█")
-print("▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░░░░▀░░▀▀▀░░░▀░▀░▀▀▀░▀▀▀")
-print("Eseguo primo tentativo di accensione del VSB-Server")
+m = 0
 
-def ping (IP):
-    result = subprocess.run(["ping", IP], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    return 0 if result.returncode == 0 else 1
+def welcome(): 
+    with open("WTW.txt", "r", encoding="utf8") as wl_write:
+        out = wl_write.read()
+        print(out)
+def ping(IP):
+    sw = "Eseguo tentativo di connessione a VSB-Server"
+    for m in range(5):
+        print(sw + "." * m)
+        risp = os.system('ping -n 1 ' + IP)
+        m += 1
+    return 0 if risp == 0 else 1
+
+
+os.system('cls')
+welcome()
+ping(IP)
 
 if ping(IP) == 0:
     print("Il server non è attivo! Vuoi attivarlo? [Y/N]")
     risposta = input()
     if risposta.upper() == "Y":
         print("Attendo prima di verificare il ping")
+        subprocess.run(["WakeMeOnLan.exe", "/wakeup", IP])
         time.sleep(30)
         print("Eseguo il ping")
         for m in range(5):
             subprocess.run(["WakeMeOnLan.exe", "/wakeup", IP])
             subprocess.run(["ping","-n", "1", IP])
             m += 1
-        if ping(IP) == 1:
+        if ping(IP) == 0:
             print("Il ping ha dato esito positivo! Vuoi essere reindirizzato alla pagina di controllo?")
             risposta = input()
             if risposta == "Y":
