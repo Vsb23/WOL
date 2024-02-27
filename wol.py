@@ -6,6 +6,7 @@ import os
 
 IP = "192.168.1.62"
 m = 0
+link_quoted = '"' + "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::" + '"'
 
 def welcome(): 
     with open("WTW.txt", "r", encoding="utf8") as wl_write:
@@ -13,18 +14,18 @@ def welcome():
         print(out)
 def ping(IP):
     sw = "Eseguo tentativo di connessione a VSB-Server"
-    for m in range(5):
+    for m in range(3):
         print(sw + "." * m)
-        risp = os.system('ping -n 1 ' + IP)
+        risp = os.system('ping -n 1 ' + IP )
         m += 1
-    return 0 if risp == 0 else 1
+    return True if risp == 0 else False
 
 
 os.system('cls')
 welcome()
 ping(IP)
 
-if ping(IP) == 0:
+if ping(IP) == False:
     print("Il server non è attivo! Vuoi attivarlo? [Y/N]")
     risposta = input()
     if risposta.upper() == "Y":
@@ -36,7 +37,7 @@ if ping(IP) == 0:
             subprocess.run(["WakeMeOnLan.exe", "/wakeup", IP])
             subprocess.run(["ping","-n", "1", IP])
             m += 1
-        if ping(IP) == 0:
+        if ping(IP) == True:
             print("Il ping ha dato esito positivo! Vuoi essere reindirizzato alla pagina di controllo?")
             risposta = input()
             if risposta == "Y":
@@ -51,11 +52,11 @@ if ping(IP) == 0:
     elif risposta.upper() == "N":
         print("WOl si chiuderà tra pochi istanti")
     
-elif ping(IP) == 1:
+elif ping(IP) == True:
     print("Il server è già attivo! Desideri essere reindirizzato alla pagina? [Y/N]")
     risposta = input()
     if risposta == "Y":
-        subprocess.run(["explorer", "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"])
+        os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
     else: 
         print("Va bene! Wol si chiuderà tra pochi istanti")
         sys.exit()
