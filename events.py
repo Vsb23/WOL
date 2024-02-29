@@ -2,28 +2,29 @@ import subprocess
 import sys
 import time
 import os
-
+from colorama import Fore
 
 IP = "192.168.1.62"
-m = 0
 link_quoted = '"' + "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::" + '"'
 
 def welcome(): 
-    with open("WTW.txt", "r", encoding="utf8") as wl_write:
+    with open("writings\\WTW.txt", "r", encoding="utf8") as wl_write:
         out = wl_write.read()
-        print(out)
-def ping(IP):
-    sw = "Eseguo tentativo di connessione a VSB-Server"
-    for m in range(3):
-        print(sw + "." * m)
-        risp = os.system('ping -n 1 ' + IP )
-        m += 1
-    return True if risp == 0 else False
-
+        print(Fore.LIGHTGREEN_EX + out)
+        print(Fore.RESET)
 
 os.system('cls')
 welcome()
-ping(IP)
+
+def ping(IP):
+    m = 0
+    while m < 3:
+        m += 1
+        sw = "Eseguo tentativo di connessione a VSB-Server"
+        sys.stdout.write(sw + "." * m + "\r")
+        risp = os.system('ping -n 1 ' + IP )
+        time.sleep(2)
+    return True if risp == 0 else False
 
 if ping(IP) == False:
     print("Il server non è attivo! Vuoi attivarlo? [Y/N]")
@@ -38,16 +39,8 @@ if ping(IP) == False:
             subprocess.run(["ping","-n", "1", IP])
             m += 1
         if ping(IP) == True:
-            print("Il ping ha dato esito positivo! Vuoi essere reindirizzato alla pagina di controllo?")
-            risposta = input()
-            if risposta == "Y":
-                while m < 5:
-                    print("Reindirizzamento in corso" + "." * m)
-                    m += 1
-            else:
-                print("Va bene! WOL si chiuderà tra pochi istanti")
-                time.sleep(1)
-                sys.exit()
+            print("Il ping ha dato esito positivo!")
+            
         sys.exit()
     elif risposta.upper() == "N":
         print("WOl si chiuderà tra pochi istanti")
