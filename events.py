@@ -13,8 +13,6 @@ def welcome():
         print(Fore.LIGHTGREEN_EX + out)
         print(Fore.RESET)
 
-os.system('cls')
-welcome()
 
 def ping(IP):
     m = 0
@@ -24,28 +22,36 @@ def ping(IP):
         sys.stdout.write(sw + "." * m + "\r")
         risp = os.system('ping -n 1 ' + IP )
         time.sleep(2)
-    return True if risp == 0 else False
-
-if ping(IP) == False:
-    print("Il server non è attivo! Vuoi attivarlo? [Y/N]")
-    risposta = input()
-    if risposta.upper() == "Y":
-        print("Attendo prima di verificare il ping")
-        subprocess.run(["WakeMeOnLan.exe", "/wakeup", IP])
-        time.sleep(30)
-        print("Eseguo il ping")
-        for m in range(5):
+    if risp == 0:
+        print("Il server non è attivo! Vuoi attivarlo? [Y/N]")
+        risposta = input()
+        if risposta.upper() == "Y":
+            print("Attendo prima di verificare il ping")
             subprocess.run(["WakeMeOnLan.exe", "/wakeup", IP])
-            subprocess.run(["ping","-n", "1", IP])
-            m += 1
-        if ping(IP) == True:
-            print("Il ping ha dato esito positivo!")
-            
-        sys.exit()
-    elif risposta.upper() == "N":
-        print("WOl si chiuderà tra pochi istanti")
+            time.sleep(30)
+            print("Eseguo il ping")
+            for m in range(5):
+                subprocess.run(["WakeMeOnLan.exe", "/wakeup", IP])
+                subprocess.run(["ping","-n", "1", IP])
+                m += 1
+            if ping(IP) == True:
+                print("Il ping ha dato esito positivo!")
+                print("Reindirizzamento verso la pagina di controllo")
+                os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
+        elif risposta.upper() == "N":
+            print("WOl si chiuderà tra pochi istanti")
+    else:
+        print("...")
+
+
+
+os.system('cls')
+welcome()
+ping(IP)
+
+''' 
     
-elif ping(IP) == True:
+elif ping(IP) == False:
     print("Il server è già attivo! Desideri essere reindirizzato alla pagina? [Y/N]")
     risposta = input()
     if risposta == "Y":
@@ -56,4 +62,4 @@ elif ping(IP) == True:
 else:
         print("Risposta non valida. Si prega di rispondere con 'Y' o 'N'.")
 
-
+'''
