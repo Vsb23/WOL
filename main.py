@@ -1,7 +1,11 @@
-from events import ping
+from events import *
 import os
-from colorama import Fore
+
 
 IP = "192.168.1.62"
+
+os.system('cls')
+welcome()
+ping(IP)
 
 

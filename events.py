@@ -5,7 +5,7 @@ import os
 from colorama import Fore
 
 IP = "192.168.1.62"
-link_quoted = '"' + "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::" + '"'
+
 
 def welcome(): 
     with open("writings\\WTW.txt", "r", encoding="utf8") as wl_write:
@@ -22,7 +22,7 @@ def ping(IP):
         sys.stdout.write(sw + "." * m + "\r")
         risp = os.system('ping -n 1 ' + IP )
         time.sleep(2)
-    if risp == 0:
+    if risp != 0:
         print("Il server non è attivo! Vuoi attivarlo? [Y/N]")
         risposta = input()
         if risposta.upper() == "Y":
@@ -41,7 +41,13 @@ def ping(IP):
         elif risposta.upper() == "N":
             print("WOl si chiuderà tra pochi istanti")
     else:
-        print("...")
+        print("Il server è già attivo! Desideri essere reindirizzato alla pagina? [Y/N]")
+        risposta = input()
+        if risposta == "Y":
+            os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
+        else: 
+            print("Va bene! Wol si chiuderà tra pochi istanti")
+            sys.exit()
 
 
 
@@ -52,13 +58,7 @@ ping(IP)
 ''' 
     
 elif ping(IP) == False:
-    print("Il server è già attivo! Desideri essere reindirizzato alla pagina? [Y/N]")
-    risposta = input()
-    if risposta == "Y":
-        os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
-    else: 
-        print("Va bene! Wol si chiuderà tra pochi istanti")
-        sys.exit()
+    
 else:
         print("Risposta non valida. Si prega di rispondere con 'Y' o 'N'.")
 
