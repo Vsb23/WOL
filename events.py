@@ -50,16 +50,3 @@ def ping(IP):
             sys.exit()
 
 
-
-os.system('cls')
-welcome()
-ping(IP)
-
-''' 
-    
-elif ping(IP) == False:
-    
-else:
-        print("Risposta non valida. Si prega di rispondere con 'Y' o 'N'.")
-
-'''
