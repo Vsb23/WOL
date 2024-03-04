@@ -5,6 +5,11 @@ import os
 from colorama import Fore
 
 IP = "192.168.1.62"
+sw = "Eseguo tentativo di connessione a " 
+sw2 = "VSB-Server"
+sw3 = "Il server è già "
+sw3_5 = "attivo!" 
+sw4 = "Scegliere l'opzione desiderata: \n 1) Reindirizzamento sulla pagina di controllo \n 2) Reindirizzamento su VSB-SERVER \n 3) Uscita \n"
 
 
 def welcome(): 
@@ -18,8 +23,7 @@ def ping(IP):
     m = 0
     while m < 3:
         m += 1
-        sw = "Eseguo tentativo di connessione a VSB-Server"
-        sys.stdout.write(sw + "." * m + "\r")
+        sys.stdout.write(sw + Fore.LIGHTGREEN_EX + sw2 + "." * m + "\r" + Fore.RESET)
         risp = os.system('ping -n 1 ' + IP )
         time.sleep(2)
     if risp != 0:
@@ -41,12 +45,12 @@ def ping(IP):
         elif risposta.upper() == "N":
             print("WOl si chiuderà tra pochi istanti")
     else:
-        print("Il server è già attivo! Desideri essere reindirizzato alla pagina? [Y/N]")
+        sys.stdout.write(sw3 + Fore.LIGHTGREEN_EX + sw3_5 + Fore.RESET + "\n" + sw4)
         risposta = input()
-        if risposta == "Y":
-            os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
-        else: 
-            print("Va bene! Wol si chiuderà tra pochi istanti")
-            sys.exit()
-
-
+        match risposta:
+            case "1":
+                os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
+            case "2":
+                pass
+            case "3":
+                sys.exit()
