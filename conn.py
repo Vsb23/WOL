@@ -1,5 +1,6 @@
 from events import *
 import os
+from colorama import Fore
 
 os.system('cls')
 
