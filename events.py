@@ -3,6 +3,7 @@ import sys
 import time
 import os
 from colorama import Fore
+import conn
 
 IP = "192.168.1.62"
 sw = "Eseguo tentativo di connessione a " 
@@ -51,6 +52,6 @@ def ping(IP):
             case "1":
                 os.system('explorer "https://192.168.1.62:8006/#v1:0:=node%2Fvsbserver:4:2::::7::"')
             case "2":
-                pass
+                conn.start()
             case "3":
                 sys.exit()
