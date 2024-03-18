@@ -21,16 +21,16 @@ def connection():
             risposta = input()
             vm_id = os.system('\n putty\plink -ssh root@192.168.1.62 -pw Tism0987 qm start ' + risposta)
 
-            print(" Si è scelto di accendere la VM" + str(vm_id) + "\n Accensione in corso")
+            print("Si è scelto di accendere la VM" + str(vm_id) + "\n Accensione in corso")
             os.system('putty\plink -ssh root@192.168.1.62 -pw Tism0987 qm start ' + risposta)
 
 
         case "2":
-            os.system('putty\plink.exe -ssh root@192.168.1.62 -pw Tism0987 qt list \n')
+            os.system('putty\plink.exe -ssh root@192.168.1.62 -pw Tism0987 pct list \n')
             print("Inserire l'ID del container che si desidera accendere")
 
             risposta = input()
-            vm_id = os.system('\n putty\plink -ssh root@192.168.1.62 -pw Tism0987 qt start ' + risposta)
+            vm_id = os.system('\n putty\plink -ssh root@192.168.1.62 -pw Tism0987 pct start ' + risposta)
 
             print(" Si è scelto di accendere il container" + str(vm_id) + "\n Accensione in corso")
             os.system('putty\plink -ssh root@192.168.1.62 -pw Tism0987 qm start ' + risposta)
